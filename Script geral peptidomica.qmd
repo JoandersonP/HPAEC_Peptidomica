@@ -8,10 +8,10 @@ format: html
 library(ggplot2)
 library(dplyr)
 
-# Carregando os dados a partir do arquivo de texto 1
-dados_1 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBV_1.txt", header = TRUE, sep = "\t", quote = "")
-# Carregando os dados a partir do arquivo de texto 2
-dados_2 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBV_2.txt", header = TRUE, sep = "\t", quote = "")
+# Carregando os dados do Experimento 1
+dados_1 <- read.table("DIRETÓRIO", header = TRUE, sep = "\t", quote = "")
+# Carregando os dados do Experimento 2
+dados_2 <- read.table("DIRETÓRIO", header = TRUE, sep = "\t", quote = "")
 # Selecionando as 10 proteínas com maiores quantidades de peptídeos e reordenando a ordem das barras
 dados_top_1 <- dados_1 %>% 
   group_by(`Proteina`) %>% 
@@ -28,10 +28,10 @@ dados_top_2 <- dados_2 %>%
   slice(1:15) %>%
   mutate(`Proteina` = reorder(`Proteina`, -n_peptides))
 
-# Gerando o gráfico do experimento 1  utilizando a função ggplot() do pacote ggplot2
+# Gerando o gráfico do Experimento 1  utilizando a função ggplot() do pacote ggplot2
 grafico_1 <- ggplot(dados_top_1, aes(x = n_peptides, y = `Proteina`)) +
   geom_bar(stat = "identity", fill = "#3CB371", width = 0.8) +
-  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Velos 1)") +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Velos - Exp 1)") +
   theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 12, face = "bold", family = "Arial"),
         axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
@@ -47,10 +47,10 @@ grafico_1 <- ggplot(dados_top_1, aes(x = n_peptides, y = `Proteina`)) +
   geom_hline(yintercept = 0.4, color = "black", linetype = "solid") +
   scale_x_continuous(limits = c(0, 15), expand = c(0, 0))
 
-# Gerando o gráfico do experimento 2 utilizando a função ggplot() do pacote ggplot2
+# Gerando o gráfico do Experimento 2 utilizando a função ggplot() do pacote ggplot2
 grafico_2 <- ggplot(dados_top_2, aes(x = n_peptides, y = `Proteina`)) +
   geom_bar(stat = "identity", fill = "#CD853F", width = 0.8) +
-  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Velos 2)") +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Velos - Exp 2)") +
   theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 12, face = "bold", family = "Arial"),
         axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
@@ -81,10 +81,10 @@ print(grafico_2)
 library(ggplot2)
 library(dplyr)
 
-# Carregando os dados a partir do arquivo de texto 1
-dados_1 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBE_1.txt", header = TRUE, sep = "\t", quote = "")
-# Carregando os dados a partir do arquivo de texto 2
-dados_2 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBE_2.txt", header = TRUE, sep = "\t", quote = "")
+# Carregando os dados do Experimento 1
+dados_1 <- read.table("DIRETÓRIO", header = TRUE, sep = "\t", quote = "")
+# Carregando os dados do Experimento 2
+dados_2 <- read.table("DIRETÓRIO", header = TRUE, sep = "\t", quote = "")
 # Selecionando as 10 proteínas com maiores quantidades de peptídeos e reordenando a ordem das barras
 dados_top_1 <- dados_1 %>% 
   group_by(`Protein.Description`) %>% 
@@ -103,7 +103,7 @@ dados_top_2 <- dados_2 %>%
 # Gerando o gráfico do experimento 1  utilizando a função ggplot() do pacote ggplot2
 grafico_1 <- ggplot(dados_top_1, aes(x = n_peptides, y = `Protein.Description`)) +
   geom_bar(stat = "identity", fill = "#008B8B", width = 0.8) +
-  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Exploris 1)") +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Exploris - Exp 1)") +
   theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 12, face = "bold", family = "Arial"),
         axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
@@ -122,7 +122,7 @@ grafico_1 <- ggplot(dados_top_1, aes(x = n_peptides, y = `Protein.Description`))
 # Gerando o gráfico do experimento 2 utilizando a função ggplot() do pacote ggplot2
 grafico_2 <- ggplot(dados_top_2, aes(x = n_peptides, y = `Protein.Description`)) +
   geom_bar(stat = "identity", fill = "#9f0089", width = 0.8) +
-  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Exploris 2)") +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Exploris - Exp 2)") +
   theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 12, face = "bold", family = "Arial"),
         axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
@@ -155,14 +155,14 @@ library(dplyr)
 library(tidyr)
 library(tidyverse)
 library(data.table)
-# Importando os dados do arquivo txt (matriz de ocorrência)
-dados_OBE1 <- read.table("C:/Users/joand/Documents/Matriz_Exploris_Tratado1.txt", header=TRUE)
+# Importando os dados do arquivo txt (matriz de ocorrência - Exploris, Exp 1)
+dados_OBE1 <- read.table("DIRETÓRIO", header=TRUE)
 names(dados_OBE1) <- c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")
 # Criando a matriz de frequências dos aminoácidos
 ocorrencias_1 <- as.matrix(dados_OBE1)
 
-# Importando os dados do arquivo txt (matriz de ocorrência)
-dados_OBE2 <- read.table("C:/Users/joand/Documents/Matriz_Exploris_Tratado2.txt", header=TRUE)
+# Importando os dados do arquivo txt (matriz de ocorrência - Exploris, Exp 2)
+dados_OBE2 <- read.table("DIRETÓRIO", header=TRUE)
 names(dados_OBE2) <- c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")
 # Criando a matriz de frequências dos aminoácidos
 ocorrencias_2 <- as.matrix(dados_OBE2)
