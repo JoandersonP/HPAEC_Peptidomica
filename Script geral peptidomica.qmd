@@ -1,0 +1,234 @@
+---
+title: Script para análises de peptidômica
+format: html
+---
+#TOP 15 PROTEÍNAS - LTQ Velos 
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+library(dplyr)
+
+# Carregando os dados a partir do arquivo de texto 1
+dados_1 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBV_1.txt", header = TRUE, sep = "\t", quote = "")
+# Carregando os dados a partir do arquivo de texto 2
+dados_2 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBV_2.txt", header = TRUE, sep = "\t", quote = "")
+# Selecionando as 10 proteínas com maiores quantidades de peptídeos e reordenando a ordem das barras
+dados_top_1 <- dados_1 %>% 
+  group_by(`Proteina`) %>% 
+  summarize(n_peptides = n()) %>% 
+  arrange(desc(n_peptides)) %>% 
+  slice(1:15) %>%
+  mutate(`Proteina` = reorder(`Proteina`, -n_peptides))
+# Selecionando as 10 proteínas com maiores quantidades de peptídeos e reordenando a ordem das barras
+
+dados_top_2 <- dados_2 %>% 
+  group_by(`Proteina`) %>% 
+  summarize(n_peptides = n()) %>% 
+  arrange(desc(n_peptides)) %>% 
+  slice(1:15) %>%
+  mutate(`Proteina` = reorder(`Proteina`, -n_peptides))
+
+# Gerando o gráfico do experimento 1  utilizando a função ggplot() do pacote ggplot2
+grafico_1 <- ggplot(dados_top_1, aes(x = n_peptides, y = `Proteina`)) +
+  geom_bar(stat = "identity", fill = "#3CB371", width = 0.8) +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Velos 1)") +
+  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 12, face = "bold", family = "Arial"),
+        axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
+        axis.text.y = element_text(size = 10, color = "black", face = "bold", family = "Arial"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        plot.background = element_rect(fill = "transparent", colour = "white"),
+        legend.position = "none") +
+  geom_text(aes(label = n_peptides), hjust = -0.2, size = 4, color = "black") +
+  geom_vline(xintercept = 0, color = "black", linetype = "solid") +
+  geom_hline(yintercept = 0.4, color = "black", linetype = "solid") +
+  scale_x_continuous(limits = c(0, 15), expand = c(0, 0))
+
+# Gerando o gráfico do experimento 2 utilizando a função ggplot() do pacote ggplot2
+grafico_2 <- ggplot(dados_top_2, aes(x = n_peptides, y = `Proteina`)) +
+  geom_bar(stat = "identity", fill = "#CD853F", width = 0.8) +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Velos 2)") +
+  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 12, face = "bold", family = "Arial"),
+        axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
+        axis.text.y = element_text(size = 10, color = "black", face = "bold", family = "Arial"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        plot.background = element_rect(fill = "transparent", colour = "white"),
+        legend.position = "none") +
+  geom_text(aes(label = n_peptides), hjust = -0.2, size = 4, color = "black") +
+  geom_vline(xintercept = 0, color = "black", linetype = "solid") +
+  geom_hline(yintercept = 0.4, color = "black", linetype = "solid") +
+  scale_x_continuous(limits = c(0, 35), expand = c(0, 0))
+  
+# Visualizando o gráfico
+print(grafico_1)
+
+# Visualizando o gráfico
+print(grafico_2)
+
+```
+
+#TOP 15 PROTEÍNAS - Exploris 480
+
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+library(dplyr)
+
+# Carregando os dados a partir do arquivo de texto 1
+dados_1 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBE_1.txt", header = TRUE, sep = "\t", quote = "")
+# Carregando os dados a partir do arquivo de texto 2
+dados_2 <- read.table("C:/Users/joand/Documents/PEPTIDOMA/peptidoma_OBE_2.txt", header = TRUE, sep = "\t", quote = "")
+# Selecionando as 10 proteínas com maiores quantidades de peptídeos e reordenando a ordem das barras
+dados_top_1 <- dados_1 %>% 
+  group_by(`Protein.Description`) %>% 
+  summarize(n_peptides = n()) %>% 
+  arrange(desc(n_peptides)) %>% 
+  slice(1:15) %>%
+  mutate(`Protein.Description` = reorder(`Protein.Description`, -n_peptides))
+# Selecionando as 10 proteínas com maiores quantidades de peptídeos e reordenando a ordem das barras
+dados_top_2 <- dados_2 %>% 
+  group_by(`Protein.Description`) %>% 
+  summarize(n_peptides = n()) %>% 
+  arrange(desc(n_peptides)) %>% 
+  slice(1:15) %>%
+  mutate(`Protein.Description` = reorder(`Protein.Description`, -n_peptides))
+
+# Gerando o gráfico do experimento 1  utilizando a função ggplot() do pacote ggplot2
+grafico_1 <- ggplot(dados_top_1, aes(x = n_peptides, y = `Protein.Description`)) +
+  geom_bar(stat = "identity", fill = "#008B8B", width = 0.8) +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Exploris 1)") +
+  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 12, face = "bold", family = "Arial"),
+        axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
+        axis.text.y = element_text(size = 10, color = "black", face = "bold", family = "Arial"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        plot.background = element_rect(fill = "transparent", colour = "white"),
+        legend.position = "none") +
+  geom_text(aes(label = n_peptides), hjust = -0.2, size = 4, color = "black") +
+  geom_vline(xintercept = 0, color = "black", linetype = "solid") +
+  geom_hline(yintercept = 0.4, color = "black", linetype = "solid") +
+  scale_x_continuous(limits = c(0, 130), expand = c(0, 0))
+
+# Gerando o gráfico do experimento 2 utilizando a função ggplot() do pacote ggplot2
+grafico_2 <- ggplot(dados_top_2, aes(x = n_peptides, y = `Protein.Description`)) +
+  geom_bar(stat = "identity", fill = "#9f0089", width = 0.8) +
+  labs(x = "Número de Peptídeos", y = "Proteína", title = "Top 15 Proteínas (Exploris 2)") +
+  theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
+        axis.title = element_text(size = 12, face = "bold", family = "Arial"),
+        axis.text.x = element_text(size = 10, color = "black", angle = 90, vjust = 0.5, hjust = 1, family = "Arial"),
+        axis.text.y = element_text(size = 10, color = "black", face = "bold", family = "Arial"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        plot.background = element_rect(fill = "transparent", colour = "white"),
+        legend.position = "none") +
+  geom_text(aes(label = n_peptides), hjust = -0.2, size = 4, color = "black") +
+  geom_vline(xintercept = 0, color = "black", linetype = "solid") +
+  geom_hline(yintercept = 0.4, color = "black", linetype = "solid") +
+  scale_x_continuous(limits = c(0, 130), expand = c(0, 0))
+
+
+# Visualizando o gráfico
+print(grafico_1)
+print(grafico_2)
+
+
+```
+
+#Criação de hatmaps (sítios de clivagem)
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(viridis)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(data.table)
+# Importando os dados do arquivo txt (matriz de ocorrência)
+dados_OBE1 <- read.table("C:/Users/joand/Documents/Matriz_Exploris_Tratado1.txt", header=TRUE)
+names(dados_OBE1) <- c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")
+# Criando a matriz de frequências dos aminoácidos
+ocorrencias_1 <- as.matrix(dados_OBE1)
+
+# Importando os dados do arquivo txt (matriz de ocorrência)
+dados_OBE2 <- read.table("C:/Users/joand/Documents/Matriz_Exploris_Tratado2.txt", header=TRUE)
+names(dados_OBE2) <- c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")
+# Criando a matriz de frequências dos aminoácidos
+ocorrencias_2 <- as.matrix(dados_OBE2)
+
+# Calculando as frequências em porcentagem para cada posição
+freqs_perc_1 <- apply(ocorrencias_1, 2, function(x) x/sum(x)*100)
+freqs_perc_1 <- as.data.frame(freqs_perc_1)
+# Calculando as frequências em porcentagem para cada posição
+freqs_perc_2 <- apply(ocorrencias_2, 2, function(x) x/sum(x)*100)
+freqs_perc_2 <- as.data.frame(freqs_perc_2)
+
+# Definindo as posições no eixo X e os aminoácidos no eixo Y
+posicoes <- colnames(freqs_perc_1)
+aminoacidos <- rownames(freqs_perc_1)
+frequencia <- gather(freqs_perc_1, key = posicoes, value = "frequencia", 1:12)
+dados_df_1 <-data.frame(aminoacidos, frequencia)
+
+# Definindo as posições no eixo X e os aminoácidos no eixo Y
+posicoes <- colnames(freqs_perc_2)
+aminoacidos <- rownames(freqs_perc_2)
+frequencia <- gather(freqs_perc_2, key = posicoes, value = "frequencia", 1:12)
+dados_df_2 <-data.frame(aminoacidos, frequencia)
+
+## Definindo a ordem dos aminoácidos no eixo Y
+ordem_aminoacidos <- c("Y", "W", "V", "T", "S", "R", "Q", "P", "N", "M", "L", "K", "I", "H", "G", "F", "E", "D", "C", "A")
+dados_df_1$aminoacidos <- factor(dados_df_1$aminoacidos, levels = aminoacidos)
+
+# Definindo a ordem das posições no eixo X
+posicoes <- c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")
+dados_df_1$posicoes <- factor(dados_df_1$posicoes, levels = posicoes)
+
+
+# Criando o heatmap com ggplot2
+ggplot(dados_df_1, aes(x = factor(posicoes, levels = c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")),
+                     y = factor(aminoacidos, levels = ordem_aminoacidos), fill = frequencia)) +
+  geom_tile() +
+  scale_fill_gradientn(colours = viridis(256, option = "H"), limits = c (0, 35), name = "Ocorrência relativa (%)")+
+  labs(x="Sítios de clivagem", y="Aminoácidos") +
+  theme(axis.text.x = element_text(face = "bold", size = 12,family = "Arial", color = "black"),
+        axis.text.y = element_text(face = "bold", size = 12,family = "Arial", color = "black"),
+        legend.text = element_text(face = "bold", size = 10, family = "Arial", color = "black"))
+
+
+# Definindo as posições no eixo X e os aminoácidos no eixo Y
+posicoes <- colnames(freqs_perc_2)
+aminoacidos <- rownames(freqs_perc_2)
+frequencia <- gather(freqs_perc_2, key = posicoes, value = "frequencia", 1:12)
+dados_df_2 <-data.frame(aminoacidos, frequencia)
+
+## Definindo a ordem dos aminoácidos no eixo Y
+ordem_aminoacidos <- c("Y", "W", "V", "T", "S", "R", "Q", "P", "N", "M", "L", "K", "I", "H", "G", "F", "E", "D", "C", "A")
+dados_df_2$aminoacidos <- factor(dados_df_2$aminoacidos, levels = aminoacidos)
+
+# Definindo a ordem das posições no eixo X
+posicoes <- c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")
+dados_df_2$posicoes <- factor(dados_df_2$posicoes, levels = posicoes)
+
+
+# Criando o heatmap com ggplot2
+ggplot(dados_df_2, aes(x = factor(posicoes, levels = c("P6", "P5", "P4", "P3", "P2", "P1", "P1'", "P2'", "P3'", "P4'", "P5'", "P6'")),
+                     y = factor(aminoacidos, levels = ordem_aminoacidos), fill = frequencia)) +
+  geom_tile() +
+  scale_fill_gradientn(colours = viridis (256, option = "H"), limits=c(0, 35), name= "Ocorrência relativa (%)") +
+  labs(x="Sítios de clivagem", y="Aminoácidos") +
+  theme(axis.text.x = element_text(face = "bold", size = 12,family = "Arial", color = "black"),
+        axis.text.y = element_text(face = "bold", size = 12,family = "Arial", color = "black"),
+        legend.text = element_text(face = "bold", size = 10, family = "Arial", color = "black"))
+
+```
